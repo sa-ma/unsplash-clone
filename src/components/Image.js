@@ -70,7 +70,7 @@ const Image = () => {
           color="white"
           pos="absolute"
           top="15px"
-          right="35px"
+          right={{ xs: 0, lg: '20px' }}
           _hover={{ transform: 'scale(0.7)' }}
           transition="transform .4s"
         />
