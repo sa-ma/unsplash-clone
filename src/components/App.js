@@ -1,11 +1,20 @@
 import React from 'react';
-import { ThemeProvider, CSSReset } from '@chakra-ui/core';
+import { ThemeProvider, theme, CSSReset } from '@chakra-ui/core';
+import Image from './Image';
 
-const App = () => {
+const customTheme = {
+  ...theme,
+  fonts: {
+    body: "'Montserrat', sans-serif",
+  },
+};
+
+const App = ({ children }) => {
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={customTheme}>
       <CSSReset />
-      <h1>Hello World</h1>
+      <Image />
+      {children}
     </ThemeProvider>
   );
 };
