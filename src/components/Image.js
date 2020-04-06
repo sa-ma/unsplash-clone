@@ -14,13 +14,7 @@ const zoom = keyframes`
   to {transform:scale(1)}
 `;
 
-const imgData = {
-  imgUrl:
-    'https://res.cloudinary.com/dis3a42lz/image/upload/v1573746832/WhatsApp_Image_2019-10-05_at_00.26.13.jpg',
-  caption: 'Lorem Ipsum Delor',
-  author: 'Samaila Bala',
-};
-const Image = () => {
+const Image = ({ imageUrl, caption, user }) => {
   const [display, setDisplay] = useState(false);
 
   const handleDisplay = () => setDisplay(!display);
@@ -36,7 +30,7 @@ const Image = () => {
         h="300px"
         m="5"
         p="3"
-        bgImage={`url('${imgData.imgUrl}')`}
+        bgImage={`url('${imageUrl}')`}
         bgSize="cover"
         bgRepeat="no-repeat"
         rounded={6}
@@ -45,10 +39,10 @@ const Image = () => {
       >
         <Box px="2">
           <Text fontSize="lg" color="white">
-            {imgData.caption}
+            {caption}
           </Text>
           <Text fontSize="sm" color="gray.500">
-            {imgData.author}
+            {user}
           </Text>
         </Box>
       </PseudoBox>
@@ -86,8 +80,8 @@ const Image = () => {
           <Img
             w="100%"
             height="450px"
-            src={imgData.imgUrl}
-            alt={imgData.caption}
+            src={imageUrl}
+            alt={caption}
             animation={`${zoom} 0.6s`}
             roundedTopLeft="6px"
             roundedTopRight="6px"
@@ -100,10 +94,10 @@ const Image = () => {
             roundedBottomRight="6px"
           >
             <Text fontSize="2xl" fontWeight="bold">
-              {imgData.caption}
+              {caption}
             </Text>
             <Text fontSize="lg" color="gray.500">
-              {imgData.author}
+              {user}
             </Text>
           </Box>
         </Box>
