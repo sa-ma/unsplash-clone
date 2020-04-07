@@ -14,27 +14,27 @@ const zoom = keyframes`
   to {transform:scale(1)}
 `;
 
-const Image = ({ imageUrl, caption, user }) => {
+const Image = ({ imageUrl, caption, user, height }) => {
   const [display, setDisplay] = useState(false);
 
   const handleDisplay = () => setDisplay(!display);
   return (
-    <>
+    <Box>
       <PseudoBox
         as="section"
         onClick={handleDisplay}
         cursor="pointer"
-        display="flex"
+        display="inline-block"
         alignItems="flex-end"
-        w="250px"
-        h="300px"
+        w="100%"
+        h={`${height()}`}
         m="5"
         p="3"
         bgImage={`url('${imageUrl}')`}
         bgSize="cover"
         bgRepeat="no-repeat"
         rounded={6}
-        _hover={{ transform: 'scale(1.12)' }}
+        _hover={{ transform: 'scale(1.05)' }}
         transition="transform .4s"
       >
         <Box px="2">
@@ -102,7 +102,7 @@ const Image = ({ imageUrl, caption, user }) => {
           </Box>
         </Box>
       </Flex>
-    </>
+    </Box>
   );
 };
 
