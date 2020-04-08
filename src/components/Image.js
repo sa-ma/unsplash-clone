@@ -14,7 +14,7 @@ const zoom = keyframes`
   to {transform:scale(1)}
 `;
 
-const Image = ({ imageUrl, caption, user, height }) => {
+const Image = ({ imageUrl, caption, user, height, location, loading }) => {
   const [display, setDisplay] = useState(false);
 
   const handleDisplay = () => setDisplay(!display);
@@ -25,7 +25,6 @@ const Image = ({ imageUrl, caption, user, height }) => {
         onClick={handleDisplay}
         cursor="pointer"
         display="inline-block"
-        alignItems="flex-end"
         w="100%"
         h={`${height()}`}
         m="5"
@@ -37,12 +36,19 @@ const Image = ({ imageUrl, caption, user, height }) => {
         _hover={{ transform: 'scale(1.05)' }}
         transition="transform .4s"
       >
-        <Box px="2">
-          <Text fontSize="lg" color="white">
-            {caption}
-          </Text>
-          <Text fontSize="sm" color="gray.500">
+        <Box
+          px="2"
+          display="flex"
+          flexDirection="column"
+          justifyContent="flex-end"
+          h="100%"
+        >
+          <Text fontSize="lg" color="white" fontWeight="bold">
             {user}
+          </Text>
+
+          <Text fontSize="sm" color="gray.500">
+            {location}
           </Text>
         </Box>
       </PseudoBox>

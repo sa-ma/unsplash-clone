@@ -11,21 +11,25 @@ const MasonryGrid = () => {
   const fetchImages = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get('https://api.unsplash.com/photos', {
-        params: {
-          client_id: process.env.REACT_APP_ACCESS_KEY,
-          per_page: '9',
-          order_by: 'relevant',
-        },
-      });
-      const strippedData = await data.map((item) => {
+      const { data } = await axios.get(
+        'https://api.unsplash.com/search/photos',
+        {
+          params: {
+            client_id: process.env.REACT_APP_ACCESS_KEY,
+            query: 'black artist',
+            per_page: '9',
+            color: 'black',
+          },
+        }
+      );
+      const strippedData = await data.results.map((item) => {
         const {
           id,
-          urls: { full },
+          urls: { regular },
           alt_description,
-          user: { name },
+          user: { name, location },
         } = item;
-        return { id, full, alt_description, name };
+        return { id, regular, alt_description, name, location };
       });
       setImageData(strippedData);
       setLoading(false);
@@ -49,13 +53,15 @@ const MasonryGrid = () => {
       style={{ columns: '3 200px', columnGap: '2rem' }}
     >
       {imageData &&
-        imageData.map(({ id, full, alt_description, name }) => (
+        imageData.map(({ id, regular, alt_description, name, location }) => (
           <Image
             key={id}
-            imageUrl={full}
+            imageUrl={regular}
             caption={alt_description}
             user={name}
             height={handleHeight}
+            location={location}
+            loading={loading}
           />
         ))}
     </Box>
