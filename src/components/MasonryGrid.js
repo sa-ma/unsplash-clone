@@ -9,47 +9,46 @@ const MasonryGrid = () => {
 
   const toast = useToast();
 
-  const fetchImages = async () => {
-    setLoading(true);
-    try {
-      const { data } = await axios.get(
-        'https://api.unsplash.com/search/photos',
-        {
-          params: {
-            client_id: process.env.REACT_APP_ACCESS_KEY,
-            query: 'black artist',
-            per_page: '9',
-            color: 'black',
-          },
-        }
-      );
-      const strippedData = await data.results.map((item) => {
-        const {
-          id,
-          urls: { regular },
-          alt_description,
-          user: { name, location },
-        } = item;
-        return { id, regular, alt_description, name, location };
-      });
-      setImageData(strippedData);
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-      toast({
-        title: 'An error occurred.',
-        status: 'error',
-        duration: 9000,
-        position: 'bottom-left',
-      });
-    }
-  };
-
   const handleHeight = () =>
     `${Math.floor(Math.random() * (400 - 200) + 200)}px`;
   useEffect(() => {
+    const fetchImages = async () => {
+      setLoading(true);
+      try {
+        const { data } = await axios.get(
+          'https://api.unsplash.com/search/photos',
+          {
+            params: {
+              client_id: process.env.REACT_APP_ACCESS_KEY,
+              query: 'black artist',
+              per_page: '9',
+              color: 'black',
+            },
+          }
+        );
+        const strippedData = await data.results.map((item) => {
+          const {
+            id,
+            urls: { regular },
+            alt_description,
+            user: { name, location },
+          } = item;
+          return { id, regular, alt_description, name, location };
+        });
+        setImageData(strippedData);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        toast({
+          title: 'An error occurred.',
+          status: 'error',
+          duration: 9000,
+          position: 'bottom-left',
+        });
+      }
+    };
     fetchImages();
-  }, []);
+  }, [toast]);
 
   return (
     <Box

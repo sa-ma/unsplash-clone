@@ -7,6 +7,7 @@ import {
   CloseButton,
   Text,
   Image as Img,
+  Skeleton,
 } from '@chakra-ui/core';
 
 const zoom = keyframes`
@@ -18,6 +19,7 @@ const Image = ({ imageUrl, caption, user, height, location, loading }) => {
   const [display, setDisplay] = useState(false);
 
   const handleDisplay = () => setDisplay(!display);
+
   return (
     <Box>
       <PseudoBox
@@ -43,15 +45,20 @@ const Image = ({ imageUrl, caption, user, height, location, loading }) => {
           justifyContent="flex-end"
           h="100%"
         >
-          <Text fontSize="lg" color="white" fontWeight="bold">
-            {user}
-          </Text>
+          <Skeleton isLoaded={!loading} my={2} w="80%" h="16px">
+            <Text fontSize="lg" color="white" fontWeight="bold">
+              {user}
+            </Text>
+          </Skeleton>
 
-          <Text fontSize="sm" color="gray.500">
-            {location}
-          </Text>
+          <Skeleton isLoaded={!loading} w="60%" h="16px">
+            <Text fontSize="sm" color="gray.500">
+              {location ? location : ''}
+            </Text>
+          </Skeleton>
         </Box>
       </PseudoBox>
+
       <Flex
         display={display ? 'flex' : 'none'}
         justifyContent="center"
