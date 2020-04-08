@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box } from '@chakra-ui/core';
+import { Box, useToast } from '@chakra-ui/core';
 import Image from './Image';
 
 const MasonryGrid = () => {
   const [loading, setLoading] = useState(false);
   const [imageData, setImageData] = useState();
-  const [error, setError] = useState(null);
+
+  const toast = useToast();
 
   const fetchImages = async () => {
     setLoading(true);
@@ -34,9 +35,13 @@ const MasonryGrid = () => {
       setImageData(strippedData);
       setLoading(false);
     } catch (error) {
-      setError(error);
-      setLoading(false);
       console.error(error);
+      toast({
+        title: 'An error occurred.',
+        status: 'error',
+        duration: 9000,
+        position: 'bottom-left',
+      });
     }
   };
 
@@ -45,6 +50,7 @@ const MasonryGrid = () => {
   useEffect(() => {
     fetchImages();
   }, []);
+
   return (
     <Box
       maxW="900px"
