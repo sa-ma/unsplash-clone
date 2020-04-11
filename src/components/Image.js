@@ -45,13 +45,13 @@ const Image = ({ imageUrl, caption, user, height, location, loading }) => {
           justifyContent="flex-end"
           h="100%"
         >
-          <Skeleton isLoaded={!loading} my={2} w="80%" h="16px">
+          <Skeleton isLoaded={!loading} my={2} h="16px">
             <Text fontSize="lg" color="white" fontWeight="bold">
               {user}
             </Text>
           </Skeleton>
 
-          <Skeleton isLoaded={!loading} w="60%" h="16px">
+          <Skeleton isLoaded={!loading} h="16px">
             <Text fontSize="sm" color="gray.500">
               {location ? location : ''}
             </Text>

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Box, Flex, Spinner, useToast } from '@chakra-ui/core';
 import Image from './Image';
 
-const MasonryGrid = () => {
+const MasonryGrid = ({ search }) => {
   const [loading, setLoading] = useState();
   const [imageData, setImageData] = useState();
   const toast = useToast();
@@ -20,7 +20,7 @@ const MasonryGrid = () => {
           {
             params: {
               client_id: process.env.REACT_APP_ACCESS_KEY,
-              query: 'black artist',
+              query: search ? search : 'black artist',
               per_page: '9',
               color: 'black',
             },
@@ -49,7 +49,7 @@ const MasonryGrid = () => {
       }
     };
     fetchImages();
-  }, [toast]);
+  }, [search, toast]);
 
   if (loading) {
     return (

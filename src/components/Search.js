@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Flex,
   Input,
@@ -7,7 +7,18 @@ import {
   Icon,
 } from '@chakra-ui/core';
 
+import { useHistory } from 'react-router-dom';
+
 const Search = () => {
+  const [searchValue, setSearchValue] = useState('');
+  const history = useHistory();
+
+  const handleChange = (event) => setSearchValue(event.target.value);
+
+  const handleSearch = (event) => {
+    if (event.keyCode === 13) history.push(`/search?query=${searchValue}`);
+  };
+
   return (
     <Flex pt="8rem" pb="12rem" bg="#cccccc" px="2rem" justify="center">
       <InputGroup w="100%" rounded={6} maxW="1200px">
@@ -21,10 +32,10 @@ const Search = () => {
           size="lg"
           type="search"
           placeholder="Search for Photo"
-          // w="80%"
-          // rounded={6}
           px={5}
           py="30px"
+          onChange={handleChange}
+          onKeyDown={handleSearch}
         />
       </InputGroup>
     </Flex>
