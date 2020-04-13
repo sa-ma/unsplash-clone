@@ -20,7 +20,7 @@ const Search = () => {
   };
 
   return (
-    <Flex pt="8rem" pb="12rem" bg="#cccccc" px="2rem" justify="center">
+    <Flex pt="8rem" pb="12rem" bg="#cccccc" px="1rem" justify="center">
       <InputGroup w="100%" rounded={6} maxW="1200px">
         <InputLeftElement
           h="100%"

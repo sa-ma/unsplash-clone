@@ -61,6 +61,8 @@ const MasonryGrid = ({ search }) => {
   return (
     <Box
       maxW="900px"
+      w="100%"
+      px="2rem"
       mx="auto"
       mt="-9rem"
       mb="5rem"

@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { keyframes } from '@emotion/core';
 import {
   Box,
   Flex,
   PseudoBox,
-  CloseButton,
   Text,
   Image as Img,
-  Skeleton,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalCloseButton,
+  useDisclosure,
 } from '@chakra-ui/core';
 
 const zoom = keyframes`
@@ -15,21 +18,21 @@ const zoom = keyframes`
   to {transform:scale(1)}
 `;
 
-const Image = ({ imageUrl, caption, user, height, location, loading }) => {
-  const [display, setDisplay] = useState(false);
-
-  const handleDisplay = () => setDisplay(!display);
+const Image = ({ imageUrl, caption, user, height, location }) => {
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
     <Box>
       <PseudoBox
         as="section"
-        onClick={handleDisplay}
+        onClick={onOpen}
         cursor="pointer"
         display="inline-block"
         w="100%"
-        h={`${height()}`}
-        m="5"
+        maxW={{ xs: '100%', lg: '250px' }}
+        h={{ xs: '300px', lg: `${height()}` }}
+        my="5"
+        mx="auto"
         p="3"
         bgImage={`url('${imageUrl}')`}
         bgSize="cover"
@@ -45,76 +48,72 @@ const Image = ({ imageUrl, caption, user, height, location, loading }) => {
           justifyContent="flex-end"
           h="100%"
         >
-          <Skeleton isLoaded={!loading} my={2} h="16px">
-            <Text fontSize="lg" color="white" fontWeight="bold">
-              {user}
-            </Text>
-          </Skeleton>
+          <Text fontSize="lg" color="white" fontWeight="bold">
+            {user}
+          </Text>
 
-          <Skeleton isLoaded={!loading} h="16px">
-            <Text fontSize="sm" color="gray.500">
-              {location ? location : ''}
-            </Text>
-          </Skeleton>
+          <Text fontSize="sm" color="gray.500">
+            {location ? location : ''}
+          </Text>
         </Box>
       </PseudoBox>
 
-      <Flex
-        display={display ? 'flex' : 'none'}
-        justifyContent="center"
-        pos="fixed"
-        zIndex="1"
-        left="0"
-        top="0"
-        width="100%"
-        height="100%"
-        overflow="auto"
-        bg="rgba(0,0,0,0.5)"
+      <Modal
+        size="full"
+        isOpen={isOpen}
+        onClose={onClose}
+        preserveScrollBarGap
+        bg="transparent"
       >
-        <CloseButton
-          onClick={handleDisplay}
-          size="lg"
-          color="white"
-          pos="absolute"
-          top="15px"
-          right={{ xs: 0, lg: '20px' }}
-          _hover={{ transform: 'scale(0.7)' }}
-          transition="transform .4s"
-        />
+        <ModalOverlay />
 
-        <Box
-          w="3xl"
-          h="auto"
-          rounded="6px"
-          my="5rem"
-          bg="white"
-          animation={`${zoom} 0.6s`}
-        >
-          <Img
-            w="100%"
-            height="450px"
-            src={imageUrl}
-            alt={caption}
-            animation={`${zoom} 0.6s`}
-            roundedTopLeft="6px"
-            roundedTopRight="6px"
-            objectFit="cover"
+        <ModalContent w="100%" bg="transparent" my="0">
+          <ModalCloseButton
+            size="xl"
+            color="white"
+            p="10px"
+            top="15px"
+            right={{ xs: 0, lg: '20px' }}
+            rounded="100px"
+            backgroundColor="rgba(0,0,0)"
+            _hover={{ transform: 'scale(0.7)' }}
+            transition="transform .4s"
           />
-          <Box
-            p="3"
+          <Flex
+            flexDirection="column"
+            justify="center"
+            mx="auto"
             bg="white"
-            roundedBottomLeft="6px"
-            roundedBottomRight="6px"
+            rounded="6px"
+            my="4rem"
           >
-            <Text fontSize="2xl" fontWeight="bold">
-              {caption}
-            </Text>
-            <Text fontSize="lg" color="gray.500">
-              {user}
-            </Text>
-          </Box>
-        </Box>
-      </Flex>
+            <Img
+              display="block"
+              w="100%"
+              maxW="700px"
+              h="450px"
+              src={imageUrl}
+              alt={caption}
+              animation={`${zoom} 0.2s`}
+              roundedTopLeft="6px"
+              roundedTopRight="6px"
+              objectFit="cover"
+            />
+            <Box
+              my="2rem"
+              mx="1rem"
+              bg="white"
+              justifySelf="flex-end"
+              roundedBottomLeft="6px"
+              roundedBottomRight="6px"
+            >
+              <Text fontSize="2xl" fontWeight="bold">
+                {user}
+              </Text>
+            </Box>
+          </Flex>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

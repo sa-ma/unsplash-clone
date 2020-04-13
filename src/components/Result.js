@@ -12,7 +12,10 @@ const Result = () => {
     <Box>
       <Flex pt="8rem" pb="12rem" bg="#cccccc" px="3rem">
         <Text fontSize="4xl" fontWeight="900">
-          Search Results for "{query[0].toUpperCase() + query.slice(1)}"
+          Search Results for{' '}
+          <Text as="span" color="grey">
+            "{query[0].toUpperCase() + query.slice(1)}"
+          </Text>
         </Text>
       </Flex>
       <MasonryGrid search={query.toLowerCase()} />
