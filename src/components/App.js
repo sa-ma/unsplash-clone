@@ -1,5 +1,10 @@
 import React from 'react';
-import { ThemeProvider, theme, CSSReset } from '@chakra-ui/core';
+import {
+  ThemeProvider,
+  theme,
+  CSSReset,
+  ColorModeProvider,
+} from '@chakra-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './Home';
 import Result from './Result';
@@ -21,18 +26,20 @@ const customTheme = {
 const App = ({ children }) => {
   return (
     <ThemeProvider theme={customTheme}>
-      <CSSReset />
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/search">
-            <Result />
-          </Route>
-        </Switch>
-      </Router>
-      {children}
+      <ColorModeProvider>
+        <CSSReset />
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/search">
+              <Result />
+            </Route>
+          </Switch>
+        </Router>
+        {children}
+      </ColorModeProvider>
     </ThemeProvider>
   );
 };

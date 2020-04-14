@@ -16,8 +16,8 @@ const MasonryGrid = ({ search }) => {
       px="2rem"
       mx="auto"
       mt="-9rem"
-      mb="5rem"
       style={{ columns: '3 200px', columnGap: '2rem' }}
+      bg="transparent"
     >
       {imageData &&
         imageData.map(({ id, regular, alt_description, name, location }) => (

@@ -10,8 +10,8 @@ import {
   ModalOverlay,
   ModalContent,
   ModalCloseButton,
-  Skeleton,
   useDisclosure,
+  useColorMode,
 } from '@chakra-ui/core';
 
 const zoom = keyframes`
@@ -22,54 +22,46 @@ const zoom = keyframes`
 const Image = ({ imageUrl, caption, user, height, location }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
+  const { colorMode } = useColorMode();
+  const bgColor = { light: '#fff', dark: '#262626' };
+
   return (
     <Box>
-      {imageUrl === undefined ? (
-        <Skeleton
-          w="100%"
-          maxW={{ xs: '100%', lg: '250px' }}
-          h={{ xs: '300px', lg: `${height()}` }}
-          my="5"
-          mx="auto"
-          p="3"
-          rounded={6}
-        />
-      ) : (
-        <PseudoBox
-          as="section"
-          onClick={onOpen}
-          cursor="pointer"
-          display="inline-block"
-          w="100%"
-          maxW={{ xs: '100%', lg: '250px' }}
-          h={{ xs: '300px', lg: `${height()}` }}
-          my="5"
-          mx="auto"
-          p="3"
-          bgImage={`url('${imageUrl}')`}
-          bgSize="cover"
-          bgRepeat="no-repeat"
-          rounded={6}
-          _hover={{ transform: 'scale(1.05)' }}
-          transition="transform .4s"
+      <PseudoBox
+        as="section"
+        onClick={onOpen}
+        cursor="pointer"
+        display="inline-block"
+        w="100%"
+        maxW={{ xs: '100%', lg: '250px' }}
+        h={{ xs: '300px', lg: `${height()}` }}
+        my="5"
+        mx="auto"
+        p="3"
+        bgImage={`url('${imageUrl}')`}
+        bgSize="cover"
+        bgRepeat="no-repeat"
+        rounded={6}
+        _hover={{ transform: 'scale(1.05)' }}
+        transition="transform .4s"
+      >
+        <Box
+          px="2"
+          display="flex"
+          flexDirection="column"
+          justifyContent="flex-end"
+          h="100%"
         >
-          <Box
-            px="2"
-            display="flex"
-            flexDirection="column"
-            justifyContent="flex-end"
-            h="100%"
-          >
-            <Text fontSize="lg" color="white" fontWeight="bold">
-              {user}
-            </Text>
+          <Text fontSize="lg" color="white" fontWeight="bold">
+            {user}
+          </Text>
 
-            <Text fontSize="sm" color="gray.500">
-              {location ? location : ''}
-            </Text>
-          </Box>
-        </PseudoBox>
-      )}
+          <Text fontSize="sm" color="gray.500">
+            {location ? location : ''}
+          </Text>
+        </Box>
+      </PseudoBox>
+
       <Modal
         size="full"
         isOpen={isOpen}
@@ -85,7 +77,7 @@ const Image = ({ imageUrl, caption, user, height, location }) => {
             color="white"
             p="10px"
             top="15px"
-            right={{ xs: 0, lg: '20px' }}
+            right={{ xs: '10px', lg: '20px' }}
             rounded="100px"
             backgroundColor="rgba(0,0,0)"
             _hover={{ transform: 'scale(0.7)' }}
@@ -95,9 +87,10 @@ const Image = ({ imageUrl, caption, user, height, location }) => {
             flexDirection="column"
             justify="center"
             mx="auto"
-            bg="white"
             rounded="6px"
-            my="4rem"
+            my={{ xs: '0', lg: '4rem' }}
+            bg={bgColor[colorMode]}
+            height={{ xs: '100vh', lg: 'auto' }}
           >
             <Img
               display="block"
@@ -114,7 +107,7 @@ const Image = ({ imageUrl, caption, user, height, location }) => {
             <Box
               my="2rem"
               mx="1rem"
-              bg="white"
+              bg={bgColor[colorMode]}
               justifySelf="flex-end"
               roundedBottomLeft="6px"
               roundedBottomRight="6px"
