@@ -5,15 +5,35 @@ import {
   InputGroup,
   InputLeftElement,
   Icon,
+  Spinner,
+  useToast,
 } from '@chakra-ui/core';
 
 import { useHistory } from 'react-router-dom';
+import useImage from '../hooks/useImage';
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState('');
+  const { loading, error } = useImage();
   const history = useHistory();
+  const toast = useToast();
 
   const handleChange = (event) => setSearchValue(event.target.value);
+
+  if (loading || error) {
+    return (
+      <Flex justify="center" h="100vh" align="center">
+        <Spinner size="xl" />
+        {error &&
+          toast({
+            title: 'An error occurred.',
+            status: 'error',
+            duration: 10000,
+            position: 'bottom-left',
+          })}
+      </Flex>
+    );
+  }
 
   const handleSearch = (event) => {
     if (event.keyCode === 13) history.push(`/search?query=${searchValue}`);

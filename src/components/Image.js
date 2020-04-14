@@ -10,6 +10,7 @@ import {
   ModalOverlay,
   ModalContent,
   ModalCloseButton,
+  Skeleton,
   useDisclosure,
 } from '@chakra-ui/core';
 
@@ -23,41 +24,52 @@ const Image = ({ imageUrl, caption, user, height, location }) => {
 
   return (
     <Box>
-      <PseudoBox
-        as="section"
-        onClick={onOpen}
-        cursor="pointer"
-        display="inline-block"
-        w="100%"
-        maxW={{ xs: '100%', lg: '250px' }}
-        h={{ xs: '300px', lg: `${height()}` }}
-        my="5"
-        mx="auto"
-        p="3"
-        bgImage={`url('${imageUrl}')`}
-        bgSize="cover"
-        bgRepeat="no-repeat"
-        rounded={6}
-        _hover={{ transform: 'scale(1.05)' }}
-        transition="transform .4s"
-      >
-        <Box
-          px="2"
-          display="flex"
-          flexDirection="column"
-          justifyContent="flex-end"
-          h="100%"
+      {imageUrl === undefined ? (
+        <Skeleton
+          w="100%"
+          maxW={{ xs: '100%', lg: '250px' }}
+          h={{ xs: '300px', lg: `${height()}` }}
+          my="5"
+          mx="auto"
+          p="3"
+          rounded={6}
+        />
+      ) : (
+        <PseudoBox
+          as="section"
+          onClick={onOpen}
+          cursor="pointer"
+          display="inline-block"
+          w="100%"
+          maxW={{ xs: '100%', lg: '250px' }}
+          h={{ xs: '300px', lg: `${height()}` }}
+          my="5"
+          mx="auto"
+          p="3"
+          bgImage={`url('${imageUrl}')`}
+          bgSize="cover"
+          bgRepeat="no-repeat"
+          rounded={6}
+          _hover={{ transform: 'scale(1.05)' }}
+          transition="transform .4s"
         >
-          <Text fontSize="lg" color="white" fontWeight="bold">
-            {user}
-          </Text>
+          <Box
+            px="2"
+            display="flex"
+            flexDirection="column"
+            justifyContent="flex-end"
+            h="100%"
+          >
+            <Text fontSize="lg" color="white" fontWeight="bold">
+              {user}
+            </Text>
 
-          <Text fontSize="sm" color="gray.500">
-            {location ? location : ''}
-          </Text>
-        </Box>
-      </PseudoBox>
-
+            <Text fontSize="sm" color="gray.500">
+              {location ? location : ''}
+            </Text>
+          </Box>
+        </PseudoBox>
+      )}
       <Modal
         size="full"
         isOpen={isOpen}
