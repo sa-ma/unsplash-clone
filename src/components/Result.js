@@ -49,7 +49,7 @@ const Result = () => {
           </Text>
         </Text>
       </Flex>
-      <MasonryGrid />
+      <MasonryGrid search={query.toLowerCase()} />
     </Box>
   );
 };
